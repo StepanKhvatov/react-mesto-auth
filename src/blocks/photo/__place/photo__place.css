@@ -1,0 +1,10 @@
+.photo__place {
+  width: 100%;
+  max-width: 282px;
+  height: 282px;
+  object-fit: cover;
+}
+
+.photo__place:hover {
+  cursor: pointer;
+}

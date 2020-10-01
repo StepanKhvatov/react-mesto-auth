@@ -1,0 +1,17 @@
+@import url(./__like-button/photo__like-button.css);
+@import url(./__like-button/_active/photo__like-button_active.css);
+@import url(./__place/photo__place.css);
+@import url(./__title/photo__title.css);
+@import url(./__caption/photo__caption.css);
+@import url(./__delete-button/photo__delete-button.css);
+@import url(./__delete-button/_hidden/photo__delete-button_hidden.css);
+@import url(./__delete-button/_visible/photo__delete-button_visible.css);
+@import url(./__like-container/photo__like-container.css);
+@import url(./__likes/photo__likes.css);
+
+.photo {
+  background: #FFFFFF;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
