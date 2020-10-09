@@ -4,8 +4,10 @@
   background-color: white;
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 330px;
 }
 
 .popup__container:hover {
@@ -15,5 +17,6 @@
 @media screen and (max-width: 515px) {
   .popup__container {
     width: 75%;
+    min-height: 308px;
   }
 }

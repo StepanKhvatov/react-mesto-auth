@@ -8,7 +8,10 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-helmet-async": "^1.0.7",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-side-effect": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,5 +33,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.21.2"
+  },
+  "resolutions": {
+    "react-helmet/react-side-effect": "2.1.0"
   }
 }
