@@ -22,6 +22,7 @@ function Login({ setInfoTooltip, handleLogin }) {
 
     if (!email || !password) {
       setMessage('Не заполнены поля ввода');
+      console.log(message);
     }
 
     auth.authorize(email, password)
@@ -35,6 +36,7 @@ function Login({ setInfoTooltip, handleLogin }) {
       .catch((err) => {
         setInfoTooltip({ isOpen: true, icon: errorIcon, text: 'Что-то пошло не так! Попробуйте ещё раз' });
         setMessage(err);
+        console.log(message);
       });
   };
 
@@ -46,7 +48,7 @@ function Login({ setInfoTooltip, handleLogin }) {
       <form className="auth-form" onSubmit={handleSubmit} noValidate>
         <h3 className="auth-form__heading">Вход</h3>
         <input
-          id="input-name"
+          id="input-name-login"
           name="email"
           value={email}
           onChange={(evt) => { setEmail(evt.target.value); }}
@@ -58,7 +60,7 @@ function Login({ setInfoTooltip, handleLogin }) {
           placeholder="Email" />
         <span id="input-name-error" className="popup__error" />
         <input
-          id="input-password"
+          id="input-password-login"
           type="password"
           name="password"
           value={password}

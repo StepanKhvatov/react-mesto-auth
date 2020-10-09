@@ -1,7 +1,6 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../images/logo.svg';
-// import { useLayoutEffect } from 'react';
 
 function Header({ email, onSignOut }) {
   const location = useLocation();

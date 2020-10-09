@@ -26,6 +26,7 @@ function Register({ handleLogin, setInfoTooltip }) {
         if (!email || !password) {
           setInfoTooltip({ isOpen: true, icon: errorIcon, text: 'Что-то пошло не так! Попробуйте ещё раз' });
           setMessage(res);
+          console.log(message);
           return;
         }
       })
@@ -47,6 +48,7 @@ function Register({ handleLogin, setInfoTooltip }) {
         .catch((err) => {
           setInfoTooltip({ isOpen: true, icon: errorIcon, text: 'Что-то пошло не так! Попробуйте ещё раз' });
           setMessage(err);
+          console.log(message);
         });
     }, 1000);
   };
@@ -59,7 +61,7 @@ function Register({ handleLogin, setInfoTooltip }) {
       <form className="auth-form" onSubmit={handleSubmit} noValidate>
         <h3 className="auth-form__heading">Регистрация</h3>
         <input
-          id="input-email"
+          id="input-email-register"
           name="email"
           value={email}
           onChange={(evt) => setEmail(evt.target.value)}
@@ -71,7 +73,7 @@ function Register({ handleLogin, setInfoTooltip }) {
           placeholder="Email" />
         <span id="input-name-error" className="popup__error" />
         <input
-          id="input-password"
+          id="input-password-register"
           name="password"
           value={password}
           onChange={(evt) => setPassword(evt.target.value)}
