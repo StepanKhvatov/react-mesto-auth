@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import errorIcon from '../images/auth-error-icon.svg';
 import * as auth from '../auth'; // переместить в app js и прокинуть пропсом
@@ -15,8 +15,6 @@ function Login({ setInfoTooltip, handleLogin }) {
     setMessage('');
   }
 
-  const history = useHistory();
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
@@ -30,7 +28,6 @@ function Login({ setInfoTooltip, handleLogin }) {
         if (data.token) {
           resetForm();
           handleLogin();
-          history.push('/');
         }
       })
       .catch((err) => {

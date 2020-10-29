@@ -1,4 +1,4 @@
-import { config } from './constants.js';
+import { config } from './constants';
 
 class Api {
   constructor({ url, headers = {} }) {
@@ -8,9 +8,9 @@ class Api {
 
   _handleResponse(res) {
     if (res.ok) {
-      return res.json()
+      return res.json();
     } else {
-      Promise.reject(res.statusText)
+      Promise.reject(res.statusText);
     }
   }
 
@@ -18,105 +18,136 @@ class Api {
     return fetch(
       `${this.url}/cards`,
       {
-        headers: this.headers
-      }
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
+      },
     )
 
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 
   postCard(data) {
     return fetch(
       `${this.url}/cards`,
       {
-        headers: this.headers,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
         method: 'POST',
         body: JSON.stringify({
           name: data.name,
-          link: data.link
-        })
-      }
+          link: data.link,
+        }),
+      },
     )
 
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 
   deleteCard(id) {
     return fetch(
       `${this.url}/cards/${id}`,
       {
-        headers: this.headers,
-        method: 'DELETE'
-      }
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
+        method: 'DELETE',
+      },
     )
 
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 
   changeAvatar(link) {
     return fetch(
       `${this.url}/users/me/avatar`,
       {
-        headers: this.headers,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
         method: 'PATCH',
         body: JSON.stringify({
-          avatar: link
-        })
-      }
+          avatar: link,
+        }),
+      },
     )
-
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 
   setUserInfo(name, about) {
     return fetch(
       `${this.url}/users/me`,
       {
-        headers: this.headers,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
         method: 'PATCH',
         body: JSON.stringify({
           name: name,
           about: about,
-        })
-      }
+        }),
+      },
     )
 
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 
   getUserInfo() {
     return fetch(
       `${this.url}/users/me`,
       {
-        headers: this.headers,
-      }
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
+      },
     )
 
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 
   putLike(id) {
     return fetch(
-      `${this.url}/cards/likes/${id}`,
+      `${this.url}/cards/${id}/likes`,
       {
-        headers: this.headers,
-        method: 'PUT'
-      }
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
+        method: 'PUT',
+      },
     )
 
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 
   deleteLike(id) {
     return fetch(
-      `${this.url}/cards/likes/${id}`,
+      `${this.url}/cards/${id}/likes`,
       {
-        headers: this.headers,
-        method: 'DELETE'
-      }
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': ` Bearer ${localStorage.jwt}`,
+        },
+        method: 'DELETE',
+      },
     )
 
-      .then(this._handleResponse)
+      .then(this._handleResponse);
   }
 }
 

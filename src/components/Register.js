@@ -27,30 +27,29 @@ function Register({ handleLogin, setInfoTooltip }) {
           setInfoTooltip({ isOpen: true, icon: errorIcon, text: 'Что-то пошло не так! Попробуйте ещё раз' });
           setMessage(res);
           console.log(message);
-          return;
+        } else if (res.message !== 'Пользователь с таким email уже есть') {
+          setTimeout(() => {
+            auth.authorize(email, password)
+              .then((data) => {
+                if (data.token) {
+                  resetForm();
+                  handleLogin();
+                  history.push('/');
+                  setInfoTooltip({ isOpen: true, icon: successIcon, text: 'Вы успешно зарегестрировались!' });
+                }
+              })
+              .catch((err) => {
+                setInfoTooltip({ isOpen: true, icon: errorIcon, text: 'Что-то пошло не так! Попробуйте ещё раз' });
+                setMessage(err);
+                console.log(message);
+              });
+          }, 1000);
         }
       })
       .catch((err) => {
         setMessage(err);
         setInfoTooltip({ isOpen: true, icon: errorIcon, text: 'Что-то пошло не так! Попробуйте ещё раз' });
       });
-
-    setTimeout(() => {
-      auth.authorize(email, password)
-        .then((data) => {
-          if (data.token) {
-            resetForm();
-            handleLogin();
-            history.push('/');
-            setInfoTooltip({ isOpen: true, icon: successIcon, text: 'Вы успешно зарегестрировались!' });
-          }
-        })
-        .catch((err) => {
-          setInfoTooltip({ isOpen: true, icon: errorIcon, text: 'Что-то пошло не так! Попробуйте ещё раз' });
-          setMessage(err);
-          console.log(message);
-        });
-    }, 1000);
   };
 
   return (

@@ -23,7 +23,11 @@ function Main({
       <main className="content">
         <section className="profile">
           <div className="profile__avatar-container" onClick={onEditAvatar}>
-            <img className="profile__avatar" src={currentUser.avatar} alt="Жак-Ив Кусто" />
+            <img
+              className="profile__avatar"
+              src={currentUser.avatar}
+              alt="Жак-Ив Кусто"
+            />
             <div className="profile__wrapper"></div>
           </div>
           <div className="profile__info">

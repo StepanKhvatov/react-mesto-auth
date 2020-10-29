@@ -1,5 +1,6 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import errorIcon from '../images/auth-error-icon.svg';
 import PopupWithForm from './PopupWithForm';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
@@ -26,7 +27,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [isOpen]);
 
   return (
     <PopupWithForm title="Редактировать профиль" onClose={onClose} onSubmit={handleSubmit} name="changeProfile" isOpen={isOpen} >

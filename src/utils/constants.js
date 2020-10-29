@@ -5,14 +5,15 @@ export const formValidationOptions = {
   inactiveButtonClass: 'popup__submit-button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible',
-  inactiveErrorClass: 'popup__error'
+  inactiveErrorClass: 'popup__error',
 };
 
 export const config = {
-  url: 'https://mesto.nomoreparties.co/v1/cohort-13',
+  // url: 'https://www.a.shv.students.nomoreparties.space',
+  url: 'http://localhost:3000',
   headers: {
-    authorization: '0fb698c6-c0f4-4661-887b-6a574c3a11ac',
-    'Content-Type': 'application/json'
-  }
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization':` Bearer ${localStorage.jwt}`,
+  },
 };
-

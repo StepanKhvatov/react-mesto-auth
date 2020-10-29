@@ -12,6 +12,7 @@ import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import InfoTooltip from './InfoTooltip';
 import api from '../utils/api';
+import errorIcon from '../images/auth-error-icon.svg';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import * as auth from '../auth';
 
@@ -35,12 +36,28 @@ function App() {
       auth.getContent(jwt)
         .then((res) => {
           if (res) {
-            setLoggedIn(true);
             setEmail(res.data.email);
+            setCurrentUser(res.data);
           }
-          history.push('/');
         })
         .catch((err) => console.log(err));
+      api.getInitialCards()
+        .then((res) => {
+          if (res !== undefined) {
+            setCards(
+              res.data.map((item) => ({
+                _id: item._id,
+                link: item.link,
+                name: item.name,
+                owner: item.owner,
+                likes: item.likes,
+              })),
+            );
+          }
+        })
+        .catch((err) => { console.log(err); });
+      setLoggedIn(true);
+      history.push('/');
     }
   }
 
@@ -52,29 +69,10 @@ function App() {
     localStorage.removeItem('jwt');
     history.push('/sign-in');
     setLoggedIn(false);
+    setCurrentUser({});
   }
 
   React.useEffect(() => {
-    api.getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => { console.log(err); });
-
-    api.getInitialCards()
-      .then((res) => {
-        setCards(
-          res.map((item) => ({
-            _id: item._id,
-            link: item.link,
-            name: item.name,
-            owner: item.owner,
-            likes: item.likes,
-          })),
-        );
-      })
-      .catch((err) => { console.log(err); });
-
     handleTokenCheck();
   }, [loggedIn]);
 
@@ -94,34 +92,40 @@ function App() {
   function handleUpdateUser(info) {
     api.setUserInfo(info.name, info.about)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser({ ...currentUser, name: res.data.name, about: res.data.about }); //  ??data
         closeAllPopups();
       })
-      .catch((err) => { console.log(err); });
+      .catch(() => {
+        closeAllPopups();
+        setInfoTooltipSettings({ isOpen: true, icon: errorIcon, text: 'Некорректно введены данные' });
+      });
   }
 
   function handleUpdateAvatar(info) {
     api.changeAvatar(info.avatar)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser({ ...currentUser, avatar: res.data });
         closeAllPopups();
       })
-      .catch((err) => { console.log(err); });
+      .catch(() => {
+        closeAllPopups();
+        setInfoTooltipSettings({ isOpen: true, icon: errorIcon, text: 'Некорректно введены данные' });
+      });
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     if (!isLiked) {
       api.putLike(card._id)
-        .then((newCard) => {
-          const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+        .then((newCard) => { // обратить внимание: обьект ответа === { data: карточка }
+          const newCards = cards.map((c) => (c._id === card._id ? newCard.data : c));
           setCards(newCards);
         })
         .catch((err) => { console.log(err); });
     } else {
       api.deleteLike(card._id)
         .then((newCard) => {
-          const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+          const newCards = cards.map((c) => (c._id === card._id ? newCard.data : c));
           setCards(newCards);
         })
         .catch((err) => { console.log(err); });
@@ -144,10 +148,13 @@ function App() {
   function handleAddPlaceSubmit(newCard) {
     api.postCard(newCard)
       .then((res) => {
-        setCards([res, ...cards]);
+        setCards([res.data, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => { console.log(err); });
+      .catch(() => {
+        closeAllPopups();
+        setInfoTooltipSettings({ isOpen: true, icon: errorIcon, text: 'Некорректно введены данные карточки' });
+      });
   }
 
   return (
